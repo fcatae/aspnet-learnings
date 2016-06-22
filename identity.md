@@ -172,3 +172,25 @@ public class HomeController : AppController
         return View();
     }
 }
+
+
+https://msdn.microsoft.com/en-us/library/system.security.claims.claimsauthenticationmanager(v=vs.110).aspx
+
+# Extending ClaimsAuthenticationManager
+
+    class SimpleClaimsAuthenticatonManager : ClaimsAuthenticationManager
+    {
+        public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
+        {
+            if (incomingPrincipal != null && incomingPrincipal.Identity.IsAuthenticated == true)
+            {
+                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim(ClaimTypes.Role, "User"));
+            }
+            return incomingPrincipal; 
+        }
+    }
+    
+    
+https://docs.asp.net/en/latest/security/data-protection/configuration/overview.html
+
+Data protection and keys
